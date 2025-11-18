@@ -5,6 +5,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [userRole, setUserRole] = useState("customer"); // Default role
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
@@ -25,6 +26,11 @@ export default function LoginPage() {
       newErrors.password = "Password must be at least 6 characters";
     }
 
+    // Role validation
+    if (!userRole) {
+      newErrors.userRole = "Please select a role";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -33,15 +39,41 @@ export default function LoginPage() {
     e.preventDefault();
     
     if (validateForm()) {
-      console.log("Login attempted with:", { email, password, rememberMe });
-      // Add your actual login logic here (API call, etc.)
+      console.log("Login attempted with:", { email, password, rememberMe, userRole });
       
-      // For demo purposes, simulate successful login
+      // Add your actual login logic here (API call, etc.)
+      // For demo purposes, simulate successful login and redirect based on role
       // if (email === "demo@example.com" && password === "password") {
-      //   navigate("/dashboard");
+      //   redirectBasedOnRole();
       // } else {
       //   setErrors({ general: "Invalid email or password" });
       // }
+      
+      // Demo redirect based on role
+      redirectBasedOnRole();
+    }
+  };
+
+  const redirectBasedOnRole = () => {
+    // Store the selected role in localStorage
+    localStorage.setItem('userRole', userRole);
+
+    // Redirect to different dashboards based on user role
+    switch(userRole) {
+      case "admin":
+        navigate("/admin/dashboard");
+        break;
+      case "manager":
+        navigate("/manager/dashboard");
+        break;
+      case "employee":
+        navigate("/employee/dashboard");
+        break;
+      case "customer":
+        navigate("/customer/dashboard");
+        break;
+      default:
+        navigate("/dashboard");
     }
   };
 
@@ -60,8 +92,7 @@ export default function LoginPage() {
         {/* Left Side - Welcome Section */}
         <div className="md:w-1/2 bg-gradient-to-r from-purple-500 to-pink-500 p-12 text-white relative overflow-hidden">
           {/* Abstract Decorative Elements */}
-          
-          <div className="absolute top-90 left-20  w-40 h-3 bg-pink-300 rounded-full opacity-70 transform -rotate-45"></div>
+          <div className="absolute top-90 left-20 w-40 h-3 bg-pink-300 rounded-full opacity-70 transform -rotate-45"></div>
           <div className="absolute top-2 right-10 w-24 h-24 bg-purple-600 rounded-full opacity-50"></div>
           <div className="absolute bottom-32 left-16 w-36 h-3 bg-orange-300 rounded-full opacity-60 transform rotate-12"></div>
           <div className="absolute bottom-0 right-20 w-28 h-28 bg-pink-400 rounded-full opacity-40 transform rotate-45"></div>
@@ -73,6 +104,9 @@ export default function LoginPage() {
             <p className="text-lg leading-relaxed opacity-90">
               Manage your business relationships more effectively. Our powerful CRM platform helps you streamline sales, track leads, and grow your business with intelligent automation and insights.
             </p>
+            
+            {/* Role Description */}
+           
           </div>
         </div>
 
@@ -91,11 +125,40 @@ export default function LoginPage() {
           )}
 
           <form onSubmit={handleLogin} className="space-y-6">
-            {/* Email Input */}
+            {/* User Role Selection */}
             <div className="relative">
               <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-500">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <select
+                value={userRole}
+                onChange={(e) => {
+                  setUserRole(e.target.value);
+                  if (errors.userRole) {
+                    setErrors({ ...errors, userRole: "" });
+                  }
+                }}
+                className={`w-full pl-12 pr-4 py-3 border-2 rounded-lg focus:outline-none transition appearance-none cursor-pointer ${
+                  errors.userRole ? "border-red-500" : "border-gray-200 focus:border-purple-500"
+                } bg-white`}
+              >
+                <option value="customer">Customer</option>
+                <option value="employee">Employee</option>
+                <option value="manager">Manager</option>
+                <option value="admin">Administrator</option>
+              </select>
+              {errors.userRole && (
+                <p className="text-red-500 text-xs mt-1 ml-1">{errors.userRole}</p>
+              )}
+            </div>
+
+            {/* Email Input */}
+            <div className="relative">
+              <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-500">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
               <input
@@ -168,7 +231,7 @@ export default function LoginPage() {
               type="submit"
               className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 rounded-full font-semibold hover:from-purple-600 hover:to-pink-600 transition transform hover:scale-105 shadow-lg"
             >
-              LOGIN
+              LOGIN AS {userRole.toUpperCase()}
             </button>
 
             {/* Sign Up Link */}
@@ -197,7 +260,7 @@ export default function LoginPage() {
               type="button"
               className="w-full flex items-center justify-center gap-3 border-2 border-gray-200 py-3 rounded-lg hover:bg-gray-50 transition"
             >
-              <svg className="w-5 h-5 " viewBox="0 0 24 24">
+              <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                 <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                 <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
