@@ -1,24 +1,19 @@
 import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard, Users, Package, ShoppingCart, FileText, Settings,
-  User, BarChart3, LogOut, X
+  User, BarChart3, LogOut, X, MessageSquare
 } from 'lucide-react';
 
 const linkBase =
   "flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl text-sm font-medium transition-all duration-200 group relative";
 
-const active = ({ isActive }) =>
-  isActive
-    ? `${linkBase} bg-purple-500 text-white shadow-lg shadow-purple-500/25`
-    : `${linkBase} text-slate-600 hover:bg-slate-50 hover:text-slate-900 hover:shadow-sm`;
-
 const MENU_CONFIG = {
   admin: [
     { to: '/admin/dashboard', label: 'Admin Dashboard', icon: LayoutDashboard },
-    { to: '/admin/users', label: 'User Management', icon: Users },
-    { to: '/admin/roles', label: 'Role Management', icon: Settings },
-    { to: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
-    { to: '/admin/reports', label: 'System Reports', icon: FileText },
+    { to: '/admin/user', label: 'User Management', icon: Users },
+    { to: '/admin/leads', label: 'Leads Management', icon: Users },
+    { to: '/admin/communication', label: 'Communication', icon: MessageSquare },
+    { to: '/admin/report', label: 'System Reports', icon: FileText },
     { to: '/admin/settings', label: 'System Settings', icon: Settings },
   ],
   manager: [
@@ -45,6 +40,15 @@ const MENU_CONFIG = {
     { to: '/customer/invoices', label: 'Invoices', icon: BarChart3 },
     { to: '/customer/history', label: 'Order History', icon: Package },
   ],
+};
+
+const active = ({ isActive }) => {
+  const userRole = localStorage.getItem('userRole') || 'customer';
+  const isAdmin = userRole === 'admin';
+  const activeColor = isAdmin ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/25' : 'bg-purple-500 text-white shadow-lg shadow-purple-500/25';
+  return isActive
+    ? `${linkBase} ${activeColor}`
+    : `${linkBase} text-slate-600 hover:bg-slate-50 hover:text-slate-900 hover:shadow-sm`;
 };
 
 export default function Sidebar({ isCollapsed, onClose, mobile }) {

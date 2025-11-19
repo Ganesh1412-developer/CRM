@@ -24,7 +24,7 @@ const CustomerDashboard = () => {
       />
 
       {/* Main Content */}
-      <div className={`flex-1 transition-all duration-300 ${sidebarCollapsed ? 'md:ml-16 lg:ml-20' : 'md:ml-64 lg:ml-72'}`}>
+      <div className={`flex-1 transition-all duration-300 ${sidebarCollapsed ? 'md:ml-16 lg:ml-20' : 'md:ml-2'}`}>
         {/* Navbar */}
         <Navbar
           onToggleSidebar={toggleSidebar}
@@ -33,7 +33,7 @@ const CustomerDashboard = () => {
         />
 
         {/* Dashboard Content */}
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           <h1 className="text-3xl font-bold text-gray-800 mb-8">Customer Dashboard</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-white p-6 rounded-lg shadow-md">

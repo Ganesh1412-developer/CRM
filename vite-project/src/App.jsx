@@ -7,7 +7,11 @@ import AdminDashboard from './Admin/dashboard.jsx';
 import ManagerDashboard from './Manager/dashboard.jsx';
 import EmployeeDashboard from './Employee/dashboard.jsx';
 import CustomerDashboard from './Customer/dashboard.jsx';
-
+import AdminLeads from './Admin/adminlead.jsx';
+import User from './Admin/user.jsx';
+import AdminReport from './Admin/report.jsx';
+import AdminSettings from './Admin/setting.jsx';
+import AdminCommunication from './Admin/Communication.jsx';
 function App() {
   return (
     <BrowserRouter>
@@ -16,6 +20,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/report" element={<AdminReport />} />
+        <Route path="/admin/leads" element={<AdminLeads />} />
+        <Route path="/admin/user" element={<User />} />
+        <Route path="/admin/communication" element={<AdminCommunication />} />
+        <Route path="/admin/settings" element={<AdminSettings />} />
         <Route path="/manager/dashboard" element={<ManagerDashboard />} />
         <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
         <Route path="/customer/dashboard" element={<CustomerDashboard />} />
