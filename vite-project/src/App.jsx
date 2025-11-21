@@ -12,6 +12,11 @@ import User from './Admin/user.jsx';
 import AdminReport from './Admin/report.jsx';
 import AdminSettings from './Admin/setting.jsx';
 import AdminCommunication from './Admin/Communication.jsx';
+import ManagerTeamManagement from './Manager/teammanagement.jsx';
+import Performance from './Manager/Performance.jsx';
+import Managerreports from './Manager/Report.jsx';
+import Project from './Manager/project.jsx';
+import ManagerApproval from './Manager/approval.jsx';
 function App() {
   return (
     <BrowserRouter>
@@ -26,8 +31,14 @@ function App() {
         <Route path="/admin/communication" element={<AdminCommunication />} />
         <Route path="/admin/settings" element={<AdminSettings />} />
         <Route path="/manager/dashboard" element={<ManagerDashboard />} />
+        <Route path="/manager/team" element={<ManagerTeamManagement />} />
+        <Route path="/manager/performance" element={<Performance />} />
+        <Route path="/manager/reports" element={<Managerreports />} />
+        <Route path="/manager/project" element={<Project />} />
+        <Route path="/manager/approvals" element={<ManagerApproval />} />
         <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
         <Route path="/customer/dashboard" element={<CustomerDashboard />} />
+
       </Routes>
     </BrowserRouter>
   );

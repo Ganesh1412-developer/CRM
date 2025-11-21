@@ -1,0 +1,3 @@
+- [ ] Modify teammanagement.jsx to include Sidebar and Navbar components for layout consistency
+- [ ] Add route for '/manager/team' in App.jsx to render the teammanagement page
+- [ ] Import ManagerTeamManagement in App.jsx

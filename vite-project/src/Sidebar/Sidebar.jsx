@@ -19,7 +19,7 @@ const MENU_CONFIG = {
   manager: [
     { to: '/manager/dashboard', label: 'Manager Dashboard', icon: LayoutDashboard },
     { to: '/manager/team', label: 'Team Management', icon: Users },
-    { to: '/manager/projects', label: 'Project Oversight', icon: Package },
+    { to: '/manager/project', label: 'Project Oversight', icon: Package },
     { to: '/manager/performance', label: 'Performance Metrics', icon: BarChart3 },
     { to: '/manager/reports', label: 'Team Reports', icon: FileText },
     { to: '/manager/approvals', label: 'Approvals', icon: Settings },
